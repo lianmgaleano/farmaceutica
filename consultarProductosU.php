@@ -5,20 +5,23 @@ include("conexion.php");
 $nombre = $_POST["nombre"];
 $id_tipo = $_POST["id_tipo"];
 $id_marca = $_POST["id_marca"];
-$precio = $_POST["precio"];
+
 session_start();
 
-if($nombre == "" && $id_tipo == 0 && $id_marca == 0 && isset($precio)){
+if($nombre == "" && $id_tipo == 0 && $id_marca == 0){
 	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca";
-}elseif($nombre != "" && $id_tipo == 0 && $id_marca == 0 && isset($precio)){
+}elseif($nombre != "" && $id_tipo == 0 && $id_marca == 0){
 	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca WHERE P.nombre LIKE '%".$nombre."%'";
-}elseif($nombre != "" && $id_tipo != "0" && $id_marca == "0" && isset($precio)){
+}elseif($nombre != "" && $id_tipo != "0" && $id_marca == "0"){
 	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca WHERE P.nombre LIKE '%".$nombre."%' AND T.idtipo = '".$id_tipo."'";
-}elseif($nombre != "" && $id_tipo != "0" && $id_marca != "0" && isset($precio)){
+}elseif($nombre != "" && $id_tipo != "0" && $id_marca != "0"){
 	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca WHERE P.nombre LIKE '%".$nombre."%' AND T.idtipo = '".$id_tipo."' AND M.idmarca = '".$id_marca."'";
-}elseif($nombre != "" && $id_tipo != "0" && $id_marca != "0" && $precio != ""){
-	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca WHERE P.nombre LIKE '%".$nombre."%' AND T.idtipo = '".$id_tipo."' AND M.idmarca = '".$id_marca."' AND P.precio = '".$precio."'";
-	echo $sentencia;
+}elseif($nombre == "" && $id_tipo != "0" && $id_marca == "0"){
+	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca WHERE T.idtipo = '".$id_tipo."'";
+}elseif($nombre == "" && $id_tipo != "0" && $id_marca != "0"){
+	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca WHERE T.idtipo = '".$id_tipo."' AND M.idmarca = '".$id_marca."'";
+}elseif($nombre == "" && $id_tipo == "0" && $id_marca != "0"){
+	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca WHERE M.idmarca = '".$id_marca."'";
 }else{
 	$sentencia = "SELECT P.idproducto id_producto, P.nombre nombre_producto, T.nombre tipo, M.nombre marca, P.precio precio FROM producto P LEFT JOIN tipo T ON T.idtipo = P.id_tipo LEFT JOIN marca M ON M.idmarca = P.id_marca";
 }
@@ -34,7 +37,6 @@ echo "<th>Id</th>";
 echo "<th>Nombre</th>";
 echo "<th>Tipo</th>";
 echo "<th>Marca</th>";
-echo "<th>Precio</th>";
 echo "<th>Acción</th>";
 echo "<th></th>";
 echo "</tr>";
@@ -47,7 +49,6 @@ if($cantidadRegistros > 0){
 		echo "<td>".$row["nombre_producto"]."</td>";
 		echo "<td>".$row["tipo"]."</td>";
 		echo "<td>".$row["marca"]."</td>";
-		echo "<td>".$row["precio"]."</td>";
 		echo "<td><button class='order' id-producto='".$row["id_producto"]."'>Pedir</button></td>";
 		echo "</tr>";
 	}
