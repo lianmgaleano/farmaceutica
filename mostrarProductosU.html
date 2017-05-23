@@ -18,7 +18,7 @@
 					async:true, 
 					type: "POST", 
 					dataType: "html", contentType: "application/x-www-form-urlencoded", 
-					url:"crearPedido.php", 
+					url:"https://lianmgaleano.000webhostapp.com/farmaceutica/crearPedido.php", 
 					data:"id_producto="+id_producto, beforeSend:inicioEnvio, success:llegadaDatos, 
 					timeout:4000, 
 					error:problemas }); 
@@ -35,7 +35,7 @@
 					async:true, 
 					type: "POST", 
 					dataType: "html", contentType: "application/x-www-form-urlencoded", 
-					url:"consultarProductosU.php", 
+					url:"https://lianmgaleano.000webhostapp.com/farmaceutica/consultarProductosU.php", 
 					data:"nombre="+nombre+"&id_tipo="+id_tipo+"&id_marca="+id_marca, beforeSend:inicioEnvio, success:llegadaDatos, 
 					timeout:4000, 
 					error:problemas }); 
