@@ -15,7 +15,7 @@
 		
 			window.onload = function(){
 				$('#consultar').click(enviar);
-				$('.order').click(function() {
+				$(document).on("click", ".order",function() {
 					console.log( $( this ).attr('id-producto'));
 				});
 			};
