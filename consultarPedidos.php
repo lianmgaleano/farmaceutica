@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 include("conexion.php");
 session_start();
 
-$sentencia = "SELECT COUNT(*) pedidos, PT.nombre FROM pedido P LEFT JOIN producto PT ON PT.idproducto = P.id_producto WHERE id_usuario = '".$_SESSION["idusuario"]."'";
+$sentencia = "SELECT COUNT(*) pedidos, PT.nombre FROM pedido P LEFT JOIN producto PT ON PT.idproducto = P.id_producto WHERE id_usuario = '".$_SESSION["idusuario"]."' GROUP BY PT.nombre";
 
 $query = mysqli_query($conexion,$sentencia);
 
