@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Farmaceutica</title>
+		<meta name="viewport" content="initial-scale=1.0">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="phonegap.js"></script>
+		
+		<script>
+			window.onload = function(){
+				$('#ingresar').click(enviar);
+			}
+	
+			function enviar() { 
+				var correo=$("#correo").val(); 
+				var password=$("#password").val(); 
+				
+				$.ajax({ 
+					async:true, 
+					type: "POST", 
+					dataType: "html", contentType: "application/x-www-form-urlencoded", 
+					url:"ingresar.php", 
+					data:"correo="+correo+"&password="+password, beforeSend:inicioEnvio, success:llegadaDatos, 
+					timeout:4000, 
+					error:problemas }); 
+				return false; 
+			} 
+
+			function inicioEnvio(){
+				$("#respuesta").text("Se estan enviando los datos");
+			}
+
+			function llegadaDatos(datos){
+				console.log(datos);
+				if(datos != "Usuario o clave erroneas"){
+					if(datos == "1"){
+						window.location="crearProductos.html";
+					}else{
+						window.location="mostrarProductosU.html";
+					}
+				}else{
+					$("#respuesta").text(datos);
+				}
+			}
+
+			function problemas(){
+				$("#respuesta").text('Problemas en el servidor.');
+			}
+		</script>
+		
+		<style>
+			.container{margin-top:100px}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-10">
+					<input type="email" class="form-control" name="correo" id="correo" placeholder="Email" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" id="ingresar" name="ingresar" class="btn btn-default">Ingresar</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<a href="registrarse.html" target="_self">
+						<button type="button" class="btn btn-default">Registrarse</button>
+					</a>
+				</div>
+			</div>
+			<div id="respuesta"></div>
+		</div>
+	</body>
+</html>

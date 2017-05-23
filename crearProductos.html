@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Farmaceutica - Crear Productos</title>
+		<meta name="viewport" content="initial-scale=1.0">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script>
+			window.onload = function(){
+				$('#crearProducto').click(enviar);
+			}
+	
+			function enviar() { 
+				var nombre=$("#nombre").val(); 
+				var id_tipo=$("#id_tipo").val(); 
+				var id_marca=$("#id_marca").val();
+				var precio=$("#precio").val();
+				
+				$.ajax({ 
+					async:true, 
+					type: "POST", 
+					dataType: "html", contentType: "application/x-www-form-urlencoded", 
+					url:"crearProducto.php", 
+					data:"nombre="+nombre+"&id_tipo="+id_tipo+"&id_marca="+id_marca+"&precio="+precio, beforeSend:inicioEnvio, success:llegadaDatos, 
+					timeout:4000, 
+					error:problemas }); 
+				return false; 
+			} 
+
+			function inicioEnvio(){
+				$("#respuesta").text("Se estan enviando los datos");
+			}
+
+			function llegadaDatos(datos){
+				$("#respuesta").text(datos);                       
+			}
+
+			function problemas(){
+				$("#respuesta").text('Problemas en el servidor.');
+			}
+		</script>
+		
+		<style>
+			.container{margin-top:100px}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Farmaceutica - Administrador</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Crear Producto</a></li>
+					<li><a href="mostrarProductos.html">Listar Productos</a></li>
+					<li><a href="index.html">Cerrar Sesión</a></li>
+				</ul>
+			</div>
+		</nav>
+		<h2>Crear Producto</h2>
+		<div class="container">
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Nombre</label>
+				<div class="col-sm-10">
+					<input type="email" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="sel1">Tipo:</label>
+				<select class="form-control" name="id_tipo" id="id_tipo">
+					<option value="1">Antibiotico</option>
+					<option value="2">Anticonceptivo</option>
+					<option value="3">Antiemético</option>
+					<option value="4">Antinauseoso</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="sel1">Marca:</label>
+				<select class="form-control" name="id_marca" id="id_marca">
+					<option value="1">Pfizer</option>
+					<option value="2">Bayer</option>
+					<option value="3">Johnson & Johnson</option>					
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Precio</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="precio" id="precio" placeholder="Precio" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<a href="crearProducto.html" target="_self">
+						<button type="button" id="crearProducto" name="crearProducto" class="btn btn-default">Crear Producto</button>
+					</a>
+				</div>
+			</div>
+			<div id="respuesta"></div>
+		</div>
+	</body>
+</html>
