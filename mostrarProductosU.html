@@ -9,14 +9,21 @@
 		<script src="js/bootstrap.min.js"></script>
 
 		<script>
-			$(document).ready(function(){
-				$("#resultado").load("consultarProductos.php");
-			});
-		
 			window.onload = function(){
 				$('#consultar').click(enviar);
 				$(document).on("click", ".order",function() {
-					console.log( $( this ).attr('id-producto'));
+					var id_producto=$( this ).attr('id-producto');
+					console.log(id_producto);
+					
+				$.ajax({ 
+					async:true, 
+					type: "POST", 
+					dataType: "html", contentType: "application/x-www-form-urlencoded", 
+					url:"crearPedido.php", 
+					data:"id_producto="+id_producto, beforeSend:inicioEnvio, success:llegadaDatos, 
+					timeout:4000, 
+					error:problemas }); 
+				return false;
 				});
 			};
 	
